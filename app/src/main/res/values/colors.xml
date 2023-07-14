@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="colorWhiteSixty">#CCFFFFFF</color>
+    <color name="menu_icons_colour">#adadae</color>
+    <color name="colorAccentNew">#006DFF</color>
+    <color name="colorPrimaryNew">#0F3971</color>
+
 </resources>

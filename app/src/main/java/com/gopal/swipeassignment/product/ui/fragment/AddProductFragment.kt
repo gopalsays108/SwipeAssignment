@@ -32,26 +32,5 @@ class AddProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getProduct();
     }
-
-    private fun getProduct() {
-        lifecycleScope.launch {
-            productViewModel.productDataFlow.collect{
-                when(it){
-                    is BaseApiResponse.Success->{
-                        Log.i(TAG, "getProduct: is: ${it.data}")
-                    }
-                    is BaseApiResponse.Failure->{
-                        Log.i(TAG, "getProduct: is: fail ${it.msg}")
-
-                    }
-                    is BaseApiResponse.Loading->{
-                        Log.i(TAG, "getProduct: is: ${it}")
-                    }
-                }
-            }
-        }
-    }
-
 }

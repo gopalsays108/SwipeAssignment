@@ -12,4 +12,9 @@ data class ProductResponseModelItem(
     @SerializedName("product_type")
     val productType: String,
     val tax: Double
-)
+){
+
+    override fun toString(): String {
+        return "Product name is: $productName, type is $productType"
+    }
+}

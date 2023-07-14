@@ -6,8 +6,6 @@ import com.gopal.servicelayer.product.model.response_model.ProductResponseModel
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository{
-
     fun getProduct(): Flow<BaseApiResponse<ProductResponseModel?>>
-
     fun addProduct()
 }
