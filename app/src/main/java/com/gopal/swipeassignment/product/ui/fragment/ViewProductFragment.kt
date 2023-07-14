@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.Visibility
 import com.gopal.servicelayer.common.BaseApiResponse
 import com.gopal.servicelayer.product.model.response_model.ProductResponseModel
 import com.gopal.servicelayer.product.model.response_model.ProductResponseModelItem
@@ -26,7 +27,6 @@ class ViewProductFragment : Fragment() {
     private val TAG = ViewProductFragment::class.java.name
     private val productViewModel by viewModel<ProductViewModel>()
     private lateinit var productAdapter: ProductAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,18 +59,24 @@ class ViewProductFragment : Fragment() {
             handleError(it)
         }
 
-        productViewModel.productList.observe(viewLifecycleOwner) { data ->
+        productViewModel.productList?.observe(viewLifecycleOwner) { data ->
+            binding.noInternet.visibility = View.GONE
             productAdapter.differ.submitList(data.toList())
         }
     }
 
-    private fun handleError(it: String?) {
-        // TODO("Not yet implemented")
+    private fun handleError(error: String?) {
+        if (error.equals("No Internet")){
+            binding.noInternet.visibility = View.VISIBLE
+        }
+        Log.i(TAG, "handleError: $error")
     }
 
-    private fun handleProgressBar(loading: Boolean?) {
-        //TODO("Not yet implemented")
-        Toast.makeText(requireContext(), "loadi $loading", Toast.LENGTH_LONG).show()
+    private fun handleProgressBar(loading: Boolean) {
+        if (loading){
+            binding.progressBar.visibility = View.VISIBLE
+        }else{
+            binding.progressBar.visibility = View.GONE
+        }
     }
-
 }
