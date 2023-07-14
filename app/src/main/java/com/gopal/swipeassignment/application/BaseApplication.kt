@@ -1,0 +1,18 @@
+package com.gopal.swipeassignment.application
+
+import android.app.Application
+import com.gopal.servicelayer.product.module.ProductModule
+import com.gopal.swipeassignment.module.ProductModuleMain
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+
+class BaseApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@BaseApplication)
+            modules(ProductModule,ProductModuleMain)
+        }
+    }
+}

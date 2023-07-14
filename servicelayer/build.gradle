@@ -11,6 +11,8 @@ android {
         minSdk 28
         targetSdk 33
 
+        buildConfigField ("String", "BASE_URL", "\"https://app.getswipe.in\"")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -22,11 +24,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 }
 
@@ -38,4 +44,20 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9'
+
+    // For ViewModel
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+
+
+    //For Koin
+    // https://mvnrepository.com/artifact/io.insert-koin/koin-android
+    implementation 'io.insert-koin:koin-android:3.2.0'
+//    implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
+//    implementation 'org.koin:koin-androidx-scope:2.0.1'
 }
