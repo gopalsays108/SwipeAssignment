@@ -28,4 +28,8 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
     }
+
+    fun navigateToNavBarDestination(destinationId: Int) {
+        binding.bottomNavigationView.selectedItemId = destinationId
+    }
 }

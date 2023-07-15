@@ -1,7 +1,9 @@
 package com.gopal.swipeassignment.product.ui.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.text.Editable
@@ -13,13 +15,15 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gopal.servicelayer.product.model.response_model.ProductResponseModelItem
 import com.gopal.swipeassignment.R
 import com.gopal.swipeassignment.databinding.FragmentViewProductBinding
 import com.gopal.swipeassignment.product.adapters.ProductAdapter
+import com.gopal.swipeassignment.product.ui.MainActivity
 import com.gopal.swipeassignment.product.viewmodel.ProductViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
@@ -31,7 +35,6 @@ class ViewProductFragment : Fragment() {
     private val TAG = ViewProductFragment::class.java.name
     private val productViewModel by viewModel<ProductViewModel>()
     private lateinit var productAdapter: ProductAdapter
-    private lateinit var speechInputLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,41 +50,17 @@ class ViewProductFragment : Fragment() {
         attachObervers()
         addTextWatcher()
         attClickListener()
-
-        speechInputLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val speechResults =
-                    result.data?.getStringArrayExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<Editable>
-                binding.searchTxt.text = speechResults[0]
-            }
-        }
-
-        addSpeechToText()
     }
 
     private fun attClickListener() {
-        binding.addNewProduct.setOnClickListener{
-            findNavController().navigate(R.id.action_viewProductFragment_to_addProductFragment)
-        }
-    }
+        binding.addNewProduct.setOnClickListener {
+            (activity as? MainActivity)?.navigateToNavBarDestination(R.id.addProductFragment)
 
-    private fun addSpeechToText() {
-
-        binding.microPhoneIcon.setOnClickListener {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-            intent.putExtra(
-                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-            )
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to search")
-            try {
-                speechInputLauncher.launch(intent)
-            } catch (e: Exception) {
-                Log.e(TAG, "addSpeechToText: $e")
-            }
+//            findNavController().navigate(
+//                R.id.action_viewProductFragment_to_addProductFragment,
+//                null,
+//                NavOptions.Builder().setPopUpTo(R.id.viewProductFragment, true).build()
+//            )
         }
     }
 
@@ -114,17 +93,19 @@ class ViewProductFragment : Fragment() {
                     newFilteredList.add(product)
                 }
             }
-            if (newFilteredList.isEmpty() && searchString.isEmpty())
-                productAdapter.differ.submitList(
-                    tempList.toList()
-                )
+            if (isVisible) {
+                if (newFilteredList.isEmpty() && searchString.isEmpty())
+                    productAdapter.differ.submitList(
+                        tempList.toList()
+                    )
 
-            productAdapter.differ.submitList(newFilteredList.toList())
+                productAdapter.differ.submitList(newFilteredList.toList())
+            }
         }
     }
 
     private fun initRecyclerView() {
-        productAdapter = ProductAdapter()
+        productAdapter = ProductAdapter(requireContext())
         binding.viewRecyclerViewAdapter.apply {
             adapter = productAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -142,7 +123,8 @@ class ViewProductFragment : Fragment() {
 
         productViewModel.productList?.observe(viewLifecycleOwner) { data ->
             binding.noInternet.visibility = View.GONE
-            productAdapter.differ.submitList(data.toList())
+            if (isVisible)
+                productAdapter.differ.submitList(data.toList())
         }
     }
 

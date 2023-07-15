@@ -1,5 +1,6 @@
 package com.gopal.swipeassignment.product.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
@@ -11,13 +12,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.gopal.servicelayer.product.model.response_model.ProductResponseModelItem
 import com.gopal.swipeassignment.R
 import com.gopal.swipeassignment.databinding.ProductCardBinding
+import java.text.DecimalFormat
 
-class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    val fragmentContext: Context,
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private val differCallback = object
         : DiffUtil.ItemCallback<ProductResponseModelItem>() {
@@ -49,15 +54,16 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
         holder.itemView.apply {
             try {
                 // TODO: Look into this
-                setImage(product, holder, context, resources)
+                setImage(product, holder, fragmentContext,resources)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
             }
 
+            val formater = DecimalFormat("#.##")
             holder.binding.productName.text = product.productName.replace("\'", "")
             holder.binding.productType.text = product.productType.replace("\'", "")
             holder.binding.productPrice.text = String.format("%s %s", "Rs. ", product.price)
-            holder.binding.productTax.text = String.format("%s %s", "Tax: ", product.tax)
+            holder.binding.productTax.text = String.format("%s %s%s", "Tax: ", formater.format(product.tax),"%")
         }
     }
 

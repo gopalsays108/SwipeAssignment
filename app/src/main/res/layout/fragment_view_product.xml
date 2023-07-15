@@ -74,14 +74,6 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/microPhoneIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_21dp"
-                android:padding="5dp"
-                app:srcCompat="@drawable/ic_microphone_search"
-                app:tint="@color/colorAccentNew" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

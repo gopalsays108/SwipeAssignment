@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:fitsSystemWindows="true"
     tools:context=".product.ui.fragment.AddProductFragment">
@@ -53,8 +53,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorWhite"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen_150dp">
+                android:paddingBottom="@dimen/dimen_40dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/carImageCardView"
@@ -117,13 +118,14 @@
                         android:layout_height="48dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:inputType="textCapSentences"
                         android:drawableEnd="@drawable/ic_edit_pen_icon"
                         android:gravity="center_vertical"
-                        android:hint="Enter product name"
+                        android:hint="@string/enter_product_name_"
                         android:paddingHorizontal="@dimen/dimen_12dp"
                         android:textColor="@color/imageBlackOff"
                         android:textColorHint="@color/textHintColor"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         app:drawableTint="@color/colorPrimaryNew" />
 
                 </androidx.cardview.widget.CardView>
@@ -308,8 +310,9 @@
                         android:drawableEnd="@drawable/ic_edit_pen_icon"
                         android:gravity="center_vertical"
                         android:hint="@string/enter__product_tax"
-                        android:maxLength="6"
+                        android:maxLength="3"
                         android:maxLines="1"
+                        android:inputType="numberDecimal"
                         android:paddingHorizontal="@dimen/dimen_12dp"
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/textHintColor"
@@ -334,7 +337,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tacCard" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/colorAccentNew"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

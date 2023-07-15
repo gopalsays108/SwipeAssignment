@@ -20,4 +20,5 @@
     <string name="furniture">Furniture</string>
     <string name="electronics">Electronics</string>
     <string name="please_select_a_type">Please select a type</string>
+    <string name="enter_product_name_">Enter product name</string>
 </resources>

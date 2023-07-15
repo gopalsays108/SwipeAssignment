@@ -67,8 +67,8 @@ class ProductViewModel(
                 ).collect {
                     when (it) {
                         is BaseApiResponse.Success -> {
-                            loading.postValue(false)
                             getProduct()
+                            loading.postValue(false)
                             postedSucces.postValue(true)
                         }
 

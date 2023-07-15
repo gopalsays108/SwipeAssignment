@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.gopal.swipeassignment.R
 import com.gopal.swipeassignment.databinding.FragmentAddProductBinding
 import com.gopal.swipeassignment.product.viewmodel.ProductViewModel
@@ -96,14 +97,51 @@ class AddProductFragment : Fragment() {
 
     private fun attachObserver() {
         productViewModel.postedSucces.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Done $it", Toast.LENGTH_SHORT).show()
+            if (it) {
+                Snackbar.make(view!!, "Product Added", Snackbar.LENGTH_LONG).show()
+                productViewModel.postedSucces.postValue(false)
+                clearInputs()
+            }
         }
         productViewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Error $it", Toast.LENGTH_SHORT).show()
-
+            Snackbar.make(view!!, "Something went wrong: $$it", Snackbar.LENGTH_LONG).show()
         }
         productViewModel.loading.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+            handleProgressBar(it)
+        }
+    }
+
+    private fun clearInputs() {
+        binding.productName.text?.clear()
+        binding.enterPrice.text?.clear()
+        binding.enterTax.text?.clear()
+        imageFile = null
+        binding.productImage.setImageDrawable(
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.product_placeholder,
+                null
+            )
+        )
+        setCategorySelection(
+            binding.gameSelection.getText().toString()
+                .lowercase(), false
+        )
+        setCategorySelection(
+            binding.furnitureSelectionTxt.getText().toString()
+                .lowercase(), false
+        )
+        setCategorySelection(
+            binding.electronnicSelectionTxt.getText().toString()
+                .lowercase(), false
+        )
+    }
+
+    private fun handleProgressBar(loading: Boolean) {
+        if (loading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
         }
     }
 

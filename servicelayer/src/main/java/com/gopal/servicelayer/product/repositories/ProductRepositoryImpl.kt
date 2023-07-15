@@ -4,11 +4,9 @@ import com.gopal.servicelayer.common.BaseApiResponse
 import com.gopal.servicelayer.common.result
 import com.gopal.servicelayer.product.api.ProductAPI
 import com.gopal.servicelayer.product.model.response_model.AddProductRequestBody
-import com.gopal.servicelayer.product.model.response_model.ProductResponseModel
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
