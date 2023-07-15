@@ -3,14 +3,30 @@
 This is a simple Prouduct listing and uploading app with 2 screen. Check project overview for detailed description. 
 ## Project Overview
 
-Provide a brief overview of the project, highlighting its purpose, features, and goals.
+The project is a multi-module Android application that follows modern architecture and best practices. It consists of two main modules: a core module and a service layer module.
+
+The core module is responsible for handling the presentation layer using the MVVM (Model-View-ViewModel) architectural pattern.
+
+The service layer module focuses on network calls and database operations. It leverages Koin, a lightweight dependency injection framework, to provide dependency management and improve code modularity. The module integrates Kotlin Coroutines for asynchronous and structured concurrency, enabling efficient and responsive app behavior.
+
+In this project we have used Koin DI to inject our dependencies seamlessly. To ensure robust and efficient data management, the project utilizes Retrofit for network requests. 
+It employs sealed and generic classes to handle and process responses from the server, promoting code reusability and reducing boilerplate code. We have also utilized kotlin flows to read response.
+For image loading, the project utilizes Glide, a popular image loading library, to efficiently load and display images from various sources.
+
+To propagate data changes and update the UI, LiveData and Kotlin Flows are utilized. LiveData allows for observable data changes, while Kotlin Flows provide support for reactive streams and asynchronous data processing.
+
+To optimize RecyclerView performance, the project utilizes DiffUtil, which calculates the difference between two lists and efficiently updates the UI, resulting in smooth and efficient list updates.
+We have also used Navigation component in this.
+We have also used many UI compopnent like recyclerview, guidlines, made custom chip layout.
+
+Overall, the project demonstrates the use of modern technologies and best practices to create a well-structured, efficient, and visually appealing Android application.
+
 
 ## Prerequisites
 
-- Android SDK (minimum version: XXX)
-- [List any other prerequisites or requirements here]
+- Android SDK
 
-## Installation
+ ## Installation
 
 1. Clone the repository:
 
