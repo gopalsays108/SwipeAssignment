@@ -114,9 +114,7 @@ class ProductAdapter(
                 }
                 return true
             }
-
         }).submit()
-
     }
 
 
