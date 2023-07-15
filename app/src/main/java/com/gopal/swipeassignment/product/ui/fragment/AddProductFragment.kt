@@ -20,12 +20,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.gopal.swipeassignment.R
 import com.gopal.swipeassignment.databinding.FragmentAddProductBinding
 import com.gopal.swipeassignment.product.viewmodel.ProductViewModel
 import com.gopal.swipeassignment.utilities.Constant.PICK_PHOTO_REQUEST_CODE
 import com.gopal.swipeassignment.utilities.Constant.READ_STORAGE_PERMISSION_CODE
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.util.Locale
@@ -273,13 +275,15 @@ class AddProductFragment : Fragment() {
     }
 
     private fun callPostApi() {
-        productViewModel.postProduct(
-            binding.productName.text.toString(),
-            providedType,
-            binding.enterPrice.text.toString(),
-            binding.enterTax.text.toString(),
-            imageFile
-        )
+        lifecycleScope.launch {
+            productViewModel.postProduct(
+                binding.productName.text.toString(),
+                providedType,
+                binding.enterPrice.text.toString(),
+                binding.enterTax.text.toString(),
+                imageFile
+            )
+        }
     }
 
     private fun checkAllDetail(): Boolean {

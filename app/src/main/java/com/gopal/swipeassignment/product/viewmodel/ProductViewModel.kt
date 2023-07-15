@@ -59,8 +59,7 @@ class ProductViewModel(
         }
     }
 
-    fun postProduct(product_name: String, product_type: String, price: String, tax: String, imageFile: File?) {
-        viewModelScope.launch {
+    suspend fun postProduct(product_name: String, product_type: String, price: String, tax: String, imageFile: File?) {
             if (Utility.hasInternetConnection(app)) {
                 repository.addProduct(
                     product_name, product_type, price, tax, imageFile
@@ -85,7 +84,6 @@ class ProductViewModel(
             } else {
                 error.postValue("No Internet")
             }
-        }
     }
 
 }
