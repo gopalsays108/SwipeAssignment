@@ -7,5 +7,17 @@
     <color name="menu_icons_colour">#adadae</color>
     <color name="colorAccentNew">#006DFF</color>
     <color name="colorPrimaryNew">#0F3971</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="textColor">#000000</color>
+    <color name="app_background_color">#FAFAFA</color>
+    <color name="greyish_blue">#E1E7EF</color>
+    <color name="imageBlackOff">#212121</color>
+    <color name="textHintColor">#E4092244</color>
+    <color name="gamecolor">#F0B00C</color>
+
+    <color name="furnitureColor">#7F4098</color>
+    <color name="electronicCOlor">#E36000</color>
+    <color name="colorRetryRed">#FD0202</color>
 
 </resources>

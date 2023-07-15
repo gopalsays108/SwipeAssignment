@@ -1,19 +1,18 @@
 package com.gopal.swipeassignment.product.adapters
 
+import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.gopal.servicelayer.product.model.response_model.ProductResponseModel
 import com.gopal.servicelayer.product.model.response_model.ProductResponseModelItem
 import com.gopal.swipeassignment.R
 import com.gopal.swipeassignment.databinding.ProductCardBinding
@@ -48,19 +47,40 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = differ.currentList[position]
         holder.itemView.apply {
-            Glide.with(context).load(product.image).placeholder(
-                ResourcesCompat.getDrawable(
-                    resources,
-                    R.drawable.product_placeholder,
-                    null
-                )
-            ).listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
+            try {
+                // TODO: Look into this
+                setImage(product, holder, context, resources)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
+            holder.binding.productName.text = product.productName.replace("\'", "")
+            holder.binding.productType.text = product.productType.replace("\'", "")
+            holder.binding.productPrice.text = String.format("%s %s", "Rs. ", product.price)
+            holder.binding.productTax.text = String.format("%s %s", "Tax: ", product.tax)
+        }
+    }
+
+    private fun setImage(
+        product: ProductResponseModelItem,
+        holder: ProductViewHolder,
+        context: Context,
+        resources: Resources
+    ) {
+        Glide.with(context).load(product.image).placeholder(
+            ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.product_placeholder,
+                null
+            )
+        ).listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                try {
                     holder.binding.productImage.setImageDrawable(
                         ResourcesCompat.getDrawable(
                             resources,
@@ -68,27 +88,29 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() 
                             null
                         )
                     )
-                    return true
+                }catch (e: Exception){
+                    e.printStackTrace()
                 }
+                return true
+            }
 
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                try {
                     holder.binding.productImage.setImageDrawable(resource)
-                    return true
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
+                return true
+            }
 
-            }).submit()
+        }).submit()
 
-            holder.binding.productName.text = product.productName.replace("\'", "")
-            holder.binding.productType.text = product.productType.replace("\'", "")
-            holder.binding.productPrice.text = String.format("%s %s", "Rs. ", product.price)
-            holder.binding.productTax.text = String.format("%s %s", "Tax: ", product.tax)
-        }
     }
 
 
