@@ -22,6 +22,37 @@ We have also used many UI compopnent like recyclerview, guidlines, made custom c
 Overall, the project demonstrates the use of modern technologies and best practices to create a well-structured, efficient, and visually appealing Android application.
 
 
+##Tech Used
+1. Multi module
+2. Koin for Dependency Injection
+3. MVVM
+4. Coroutines
+5. Sealed and generic class for handling response
+6. Retrofit
+7. Navigation component
+8. Kotlin FLows
+9. Glide
+10. BuildConfig to store Base URL and API keys
+11. ViewBinding
+12. Data classes
+13. LiveDatas
+14. Diff Utils
+
+## For UI
+1. Recyclerview
+2. Guidlines
+3. Constrainview
+4. NestedScrollView
+5. HorizontalScrollView
+6. CardView
+7. Custom chip using HorizontalScrollView
+8. Drawables files
+
+##Other tools
+1. Android studio
+2. Github
+
+   
 ## Prerequisites
 
 - Android SDK
