@@ -123,8 +123,7 @@ class ViewProductFragment : Fragment() {
 
         productViewModel.productList?.observe(viewLifecycleOwner) { data ->
             binding.noInternet.visibility = View.GONE
-            if (isVisible)
-                productAdapter.differ.submitList(data.toList())
+            productAdapter.differ.submitList(data.toList())
         }
     }
 

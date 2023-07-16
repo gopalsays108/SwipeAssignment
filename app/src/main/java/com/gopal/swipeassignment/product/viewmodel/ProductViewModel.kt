@@ -29,11 +29,12 @@ class ProductViewModel(
     var postedSucces: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-        getProduct()
+        viewModelScope.launch {
+            getProduct()
+        }
     }
 
-    private fun getProduct() {
-        viewModelScope.launch {
+    private suspend fun getProduct() {
             if (Utility.hasInternetConnection(app)) {
                 productDataFlow.collect {
                     when (it) {
@@ -56,7 +57,7 @@ class ProductViewModel(
             } else {
                 error.postValue("No Internet")
             }
-        }
+
     }
 
     suspend fun postProduct(product_name: String, product_type: String, price: String, tax: String, imageFile: File?) {

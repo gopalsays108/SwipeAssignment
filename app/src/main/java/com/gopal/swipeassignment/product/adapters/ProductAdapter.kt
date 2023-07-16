@@ -52,8 +52,9 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = differ.currentList[position]
         holder.itemView.apply {
+            holder.binding.productImage.tag = product.image
+
             try {
-                // TODO: Look into this
                 setImage(product, holder, fragmentContext,resources)
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
@@ -86,16 +87,18 @@ class ProductAdapter(
                 target: com.bumptech.glide.request.target.Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
-                try {
-                    holder.binding.productImage.setImageDrawable(
-                        ResourcesCompat.getDrawable(
-                            resources,
-                            R.drawable.product_placeholder,
-                            null
+                if (holder.binding.productImage.tag == product.image) {
+                    try {
+                        holder.binding.productImage.setImageDrawable(
+                            ResourcesCompat.getDrawable(
+                                resources,
+                                R.drawable.product_placeholder,
+                                null
+                            )
                         )
-                    )
-                }catch (e: Exception){
-                    e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 return true
             }
@@ -107,10 +110,12 @@ class ProductAdapter(
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
-                try {
-                    holder.binding.productImage.setImageDrawable(resource)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                if (holder.binding.productImage.tag == product.image) {
+                    try {
+                        holder.binding.productImage.setImageDrawable(resource)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 return true
             }
